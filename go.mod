@@ -1,3 +1,3 @@
-module github.com/rmangane-30120/gql
+module github.com/robmanganelly/gql
 
-go 1.21
+go 1.25

@@ -1,6 +1,6 @@
 {
   "name": "GQL Go Development",
-  "image": "mcr.microsoft.com/devcontainers/go:1.21",
+  "image": "mcr.microsoft.com/devcontainers/go:1.25",
   "features": {
     "ghcr.io/devcontainers/features/git:1": {}
   },
