@@ -11,6 +11,7 @@
         "ms-azuretools.vscode-containers",
         "ms-azuretools.vscode-docker",
         "premparihar.gotestexplorer",
+        "github.copilot",
         "github.copilot-chat"
       ],
       "settings": {
