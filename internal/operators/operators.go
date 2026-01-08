@@ -24,6 +24,7 @@ const (
 	CategoryNumeric  Category = "numeric"
 	CategoryRange    Category = "range"
 	CategorySet      Category = "set"
+	CategoryText     Category = "text"
 )
 
 // Operator represents a filter operator
@@ -45,8 +46,8 @@ const (
 
 // Range operators
 const (
-	Between    Operator = "between"
-	NotBetween Operator = "nbetween"
+	Between    Operator = "bt"
+	NotBetween Operator = "nbt"
 )
 
 // Set operators
@@ -105,6 +106,12 @@ var registry = map[Operator]operatorInfo{
 	NotIn:       {CategorySet, "not in set of values"},
 	SuperSetOf:  {CategorySet, "is superset of another set"},
 	NotSuperSet: {CategorySet, "is not superset of another set"},
+
+	// Text
+	Includes:             {CategoryText, "includes substring (case sensitive)"},
+	NotIncludes:          {CategoryText, "does not include substring (case sensitive)"},
+	InsentiveIncludes:    {CategoryText, "includes substring (case insensitive)"},
+	InsentiveNotIncludes: {CategoryText, "does not include substring (case insensitive)"},
 }
 
 // IsValid checks if the operator is supported
