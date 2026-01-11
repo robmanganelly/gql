@@ -1,6 +1,6 @@
 // # Usage
 //
-//	import "github.com/robmanganelly/gql/internal/operators"
+//	import "github.com/robmanganelly/grf/internal/operators"
 //
 //	// Parse from query string
 //	op, ok := operators.Parse("eq")

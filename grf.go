@@ -1,29 +1,29 @@
-// Package gql provides a query library for REST APIs that enables rich querying capabilities.
+// Package grf provides a query library for REST APIs that enables rich querying capabilities.
 //
 // It sits on top of standard REST APIs to allow clients to pass complex filters
 // in a standardized way.
 //
 // # Usage
 //
-//	import "github.com/robmanganelly/gql"
+//	import "github.com/robmanganelly/grf"
 //
 //	// Define your filter schema
 //	type UserFilters struct {
-//	    Name   string  `gql:"name"`
-//	    Age    float64 `gql:"age"`
-//	    Status string  `gql:"status"`
+//	    Name   string  `grf:"name"`
+//	    Age    float64 `grf:"age"`
+//	    Status string  `grf:"status"`
 //	}
 //
 //	// Parse query parameters
 //	func handleUsers(w http.ResponseWriter, r *http.Request) {
-//	    var query gql.Query[UserFilters]
-//	    if err := gql.ParseQuery(r.URL.Query(), &query); err != nil {
+//	    var query grf.Query[UserFilters]
+//	    if err := grf.ParseQuery(r.URL.Query(), &query); err != nil {
 //	        http.Error(w, err.Error(), http.StatusBadRequest)
 //	        return
 //	    }
 //
 //	    // Generate SQL WHERE clause
-//	    result, err := gql.ToSQLWhere(query.Filters)
+//	    result, err := grf.ToSQLWhere(query.Filters)
 //	    if err != nil {
 //	        http.Error(w, err.Error(), http.StatusInternalServerError)
 //	        return
@@ -59,13 +59,13 @@
 // Range: bt (between), nbt (not between)
 // Set: in, nin (not in), sset (superset), nsset (not superset)
 // Text: inc (includes), ninc (not includes), iinc (case-insensitive includes), ininc (case-insensitive not includes)
-package gql
+package grf
 
 import (
 	"net/url"
 
-	"github.com/robmanganelly/gql/internal/operators"
-	"github.com/robmanganelly/gql/internal/parser"
+	"github.com/robmanganelly/grf/internal/operators"
+	"github.com/robmanganelly/grf/internal/parser"
 )
 
 // Re-export types from internal packages
@@ -158,17 +158,17 @@ const (
 
 // ParseQuery parses URL query parameters and populates the target Query.
 // The type parameter T should be a struct that defines allowed filter fields
-// via `gql` struct tags.
+// via `grf` struct tags.
 //
 // Example:
 //
 //	type UserFilters struct {
-//	    Name   string `gql:"name"`
-//	    Age    int    `gql:"age"`
+//	    Name   string `grf:"name"`
+//	    Age    int    `grf:"age"`
 //	}
 //
-//	var query gql.Query[UserFilters]
-//	err := gql.ParseQuery(r.URL.Query(), &query)
+//	var query grf.Query[UserFilters]
+//	err := grf.ParseQuery(r.URL.Query(), &query)
 func ParseQuery[T any](params url.Values, target *Query[T]) error {
 	return parser.ParseQuery(params, target)
 }
@@ -178,7 +178,7 @@ func ParseQuery[T any](params url.Values, target *Query[T]) error {
 //
 // Example:
 //
-//	result, err := gql.ToSQLWhere(query.Filters)
+//	result, err := grf.ToSQLWhere(query.Filters)
 //	// result.Clause: "name = $1 AND age > $2"
 //	// result.Args: ["john", 25]
 func ToSQLWhere(filters []Filter) (*SQLWhereResult, error) {
@@ -195,7 +195,7 @@ func ToSQLWhere(filters []Filter) (*SQLWhereResult, error) {
 //	    "name": "users.full_name",
 //	    "age":  "users.age",
 //	}
-//	result, err := gql.ToSQLWhereAlias(query.Filters, keymap)
+//	result, err := grf.ToSQLWhereAlias(query.Filters, keymap)
 //	// result.Clause: "users.full_name = $1 AND users.age > $2"
 //	// result.Args: ["john", 25]
 func ToSQLWhereAlias(filters []Filter, keymap map[string]string) (*SQLWhereResult, error) {
@@ -207,7 +207,7 @@ func ToSQLWhereAlias(filters []Filter, keymap map[string]string) (*SQLWhereResul
 //
 // Example:
 //
-//	op, ok := gql.ParseOperator("eq")
+//	op, ok := grf.ParseOperator("eq")
 //	if ok {
 //	    fmt.Println(op) // "eq"
 //	}
@@ -224,7 +224,7 @@ func AllOperators() []Operator {
 //
 // Example:
 //
-//	numericOps := gql.OperatorsByCategory(gql.CategoryNumeric)
+//	numericOps := grf.OperatorsByCategory(grf.CategoryNumeric)
 //	// [gt, gte, lt, lte]
 func OperatorsByCategory(cat Category) []Operator {
 	return operators.ByCategory(cat)

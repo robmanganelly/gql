@@ -1,3 +1,3 @@
-module github.com/robmanganelly/gql
+module github.com/robmanganelly/grf
 
 go 1.25

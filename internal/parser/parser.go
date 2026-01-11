@@ -2,13 +2,13 @@
 //
 // # Usage
 //
-//	import "github.com/robmanganelly/gql/internal/parser"
+//	import "github.com/robmanganelly/grf/internal/parser"
 //
 //	// Define your filter schema
 //	type UserFilters struct {
-//	    Name   string  `gql:"name"`
-//	    Age    float64 `gql:"age"`
-//	    Status string  `gql:"status"`
+//	    Name   string  `grf:"name"`
+//	    Age    float64 `grf:"age"`
+//	    Status string  `grf:"status"`
 //	}
 //
 //	// Parse query parameters (idiomatic pointer pattern)
@@ -59,7 +59,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/robmanganelly/gql/internal/operators"
+	"github.com/robmanganelly/grf/internal/operators"
 )
 
 // FilterType discriminator for schema generation
@@ -247,13 +247,13 @@ type rawFilter struct {
 
 // ParseQuery parses URL query parameters and populates the target Query.
 // The type parameter T should be a struct that defines allowed filter fields
-// via `gql` struct tags.
+// via `grf` struct tags.
 //
 // Example:
 //
 //	type UserFilters struct {
-//	    Name   string `gql:"name"`
-//	    Age    int    `gql:"age"`
+//	    Name   string `grf:"name"`
+//	    Age    int    `grf:"age"`
 //	}
 //
 //	var query parser.Query[UserFilters]
@@ -626,11 +626,11 @@ func extractAllowedFields[T any]() (map[string]reflect.Type, error) {
 
 	for i := 0; i < t.NumField(); i++ {
 		field := t.Field(i)
-		tag := field.Tag.Get("gql")
+		tag := field.Tag.Get("grf")
 		if tag == "" || tag == "-" {
 			continue
 		}
-		// Handle tag options (e.g., `gql:"name,omitempty"`)
+		// Handle tag options (e.g., `grf:"name,omitempty"`)
 		tagName := strings.Split(tag, ",")[0]
 		fields[tagName] = field.Type
 	}
