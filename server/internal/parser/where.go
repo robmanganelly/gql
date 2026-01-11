@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/robmanganelly/gql/internal/operators"
+	"github.com/robmanganelly/grf/internal/operators"
 )
 
 // SQLWhereResult contains the WHERE clause and its arguments
